@@ -1,9 +1,8 @@
 ---
 title: "HELPmiss (Data Verbs) Activity"
-author: "YOUR NAME HERE"
+author: "Mysha Nihal"
 output: html_notebook
 ---
-
 
 ## Set Up:
 
@@ -20,111 +19,194 @@ data("HELPmiss", package = "mosaicData")
 
 ```
 
-## Helpful links: 
-
-- Look though the DC Textbook for `tidyverse` functions. 
-- Check out some of these RStudio cheat sheets:
-  - <https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf> 
-  - <https://www.rstudio.com/resources/cheatsheets/>
-  - <https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Tidyverse+Cheat+Sheet.pdf>
-  
-
-
-
 ## Task 1: Data Description
 
-*Write several sentences (or a bullet list) describing the HELP Study and the resulting `HELPmiss` data.  Your description should investigate basic data provenance (e.g., Who, What, When, Where, Why, How), explain the setting for the data, specify what each case represents in the data, and remark on inclusion/exclusion criteria.* 
+-   The HELP Study is a research project that examines the relationship between health behaviors, social support, and various aspects of life in a network of communities.
 
+-   The HELPmiss dataset is derived from the HELP Study.
 
-- investigate by searching R help documentation
-- there's a research paper cited where additional detail is provided
+-   The dataset includes information on demographics, health behaviors, social support, and other relevant factors.
 
+-   The specific individuals involved in the study can be found in the research paper or documentation.
 
+-   The purpose of the study is to gain insights into how health behaviors and social support impact health outcomes and well-being.
 
-## Task 2: Basic Summaries 
+-   Each case in the dataset represents an individual participant in the HELP Study.
 
-*Produce one or more R expressions involving `summarize()` and `HELPmiss` to address each of the following prompts.*
+## Task 2: Basic Summaries
 
-1. number of people (cases) in `HELPmiss` study
+1.  number of people (cases) in `HELPmiss` study
 
 ```{r}
-#Your code here 
+
+number_of_people <- HELPmiss %>% 
+  summarize(number_of_people = n())
 
 ```
 
-2. total number of times in the past 6 months entered a detox program (measured at baseline) for all the people in `HELPmiss`. 
+2.  total number of times in the past 6 months entered a detox program (measured at baseline) for all the people in `HELPmiss`.
 
 ```{r}
-#Your code here 
+
+total_detox_entries <- HELPmiss %>%
+  summarize(total_detox_entries = sum(e2b, na.rm = TRUE))
 
 ```
 
-
-3. mean time (in days) to first use of any substance post-detox for all the people in `HELPmiss`
-
+3.  mean time (in days) to first use of any substance post-detox for all the people in `HELPmiss`
 
 ```{r}
-#Your code here 
+
+mean_time_post_detox <- HELPmiss %>%
+  summarize(mean_time_post_detox = mean(daysanysub, na.rm = TRUE))
 
 ```
 
+## Task 3: Group Summaries
 
-
-## Task 3: Group Summaries  
-
-*Repeat task 2 above, but add code chunks to calculate result group-by-group according to each prompt (i.e. each promt should have three statements for each of the three prompts in task 2).  Be sure to show all R code and write a sentence or two about what you observe in the results. Remember, you can add multiple statistics inside `summary`.* 
-
-
-- males versus females
-- homeless or not
-- substance
-- break down the homeless versus housed further, by sex
-- homeless versus housed broken down by substance
+-   males versus females
+-   homeless or not
+-   substance
+-   break down the homeless versus housed further, by sex
+-   homeless versus housed broken down by substance
 
 ### males versus females
+
 ```{r}
-#Your code here
+
+people_gender <- HELPmiss %>%
+group_by(sex) %>%
+  summarize(people_gender = n())
+
+```
+
+```{r}
+
+detox_entries_gender <- HELPmiss %>%
+  group_by(sex) %>%
+  summarize(detox_entries_gender = sum(e2b, na.rm = TRUE))
+
+```
+
+```{r}
+
+mean_time_post_detox_gender <- HELPmiss %>%
+  group_by(sex) %>%
+  summarize(mean_time_post_detox_gender = mean(daysanysub, na.rm = TRUE))
 
 ```
 
 ### homeless or not
+
 ```{r}
-#Your code here
+
+people_gender_homeless <- HELPmiss %>%
+group_by(homeless) %>%
+  summarize(people_gender_homeless = n())
 
 ```
 
+```{r}
+
+detox_entries_homeless <- HELPmiss %>%
+  group_by(homeless) %>%
+  summarize(detox_entries_homeless = sum(e2b, na.rm = TRUE))
+
+```
+
+```{r}
+
+mean_time_post_detox_homeless <- HELPmiss %>%
+  group_by(homeless) %>%
+  summarize(mean_time_post_detox_homeless = mean(daysanysub, na.rm = TRUE))
+
+```
 
 ### substance
+
 ```{r}
-#Your code here
+
+people_gender_substance <- HELPmiss %>%
+group_by(substance) %>%
+  summarize(people_gender_substance = n())
+
+```
+
+```{r}
+
+detox_entries_substance <- HELPmiss %>%
+  group_by(substance) %>%
+  summarize(detox_entries_substance = sum(e2b, na.rm = TRUE))
+
+```
+
+```{r}
+
+mean_time_post_detox_substance <- HELPmiss %>%
+  group_by(substance) %>%
+  summarize(mean_time_post_detox_substance = mean(daysanysub, na.rm = TRUE))
 
 ```
 
 ### homeless versus housed broken down by sex
+
 ```{r}
-#Your code here
+
+people_gender_homeless_sex <- HELPmiss %>%
+group_by(homeless, sex) %>%
+  summarize(people_gender_homeless_sex = n())
+
+```
+
+```{r}
+
+detox_entries_homeless_sex <- HELPmiss %>%
+  group_by(homeless, sex) %>%
+  summarize(detox_entries_homeless_sex = sum(e2b, na.rm = TRUE))
+
+```
+
+```{r}
+
+mean_time_post_detox_homeless_sex <- HELPmiss %>%
+  group_by(homeless, sex) %>%
+  summarize(mean_time_post_detox_homeless_sex = mean(daysanysub, na.rm = TRUE))
 
 ```
 
 ### homeless versus housed broken down by substance
+
 ```{r}
-#Your code here
+
+people_gender_homeless_substance <- HELPmiss %>%
+group_by(homeless, substance) %>%
+  summarize(people_gender_homeless_substance = n())
 
 ```
 
+```{r}
 
+detox_entries_homeless_substance <- HELPmiss %>%
+  group_by(homeless, substance) %>%
+  summarize(detox_entries_homeless_substance = sum(e2b, na.rm = TRUE))
+
+```
+
+```{r}
+
+mean_time_post_detox_homeless_substance <- HELPmiss %>%
+  group_by(homeless, substance) %>%
+  summarize(mean_time_post_detox_homeless_substance = mean(daysanysub, na.rm = TRUE))
+
+```
 
 ## Task 4: Data Visualization & Observations
 
-*Include one or more interesting plots from this data set involving at least 3 variables per plot. Write a few sentences to explain the story that your plot tells about these data.  You can expand on the relationships that you studied in Task 2, or you can explore a different group of variables in `HELPmiss` that show something interesting. Remember to use the interactive commands in the console, generate the R commands that will reproduce your plot, and then paste the R commands into an R chunk in the RMarkdown file.*  
-
-*Remember, you can use* `esquisser` *or* `mplot` *in your console. But only include the ggplot code in this Rmd document.*
-
-
 ```{r}
-# Your Code here.
+
+ggplot(HELPmiss, aes(x = age, y = daysanysub, color = substance)) +
+  geom_point() +
+  labs(x = "Age (years)", y = "Days to 1st post-detox substance use", color = "Substance") +
+  theme_minimal()
 
 ```
-
-
-
